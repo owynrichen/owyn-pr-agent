@@ -1,0 +1,42 @@
+plan_edit:
+  description: >-
+    Read the document located at {file_path}, pull out all the urls referenced package it
+    into a Document and provide a basic strategy for how to review it.
+  expected_output: >-
+    An EditingStrategy with strategic notes for areas the team should focus their research
+    and review.
+  agent: >-
+    managing_editor
+
+research_topic:
+  description: >-
+    Conduct a thorough research about the topic of the document located at {file_path}.
+
+    Make sure you find any interesting and relevant information given the
+    current date is {current_date}.
+  expected_output: >-
+    A complete TopicResearchReport on the Document of the post and the landscape of the related field,
+    including sources that are authoritative, any relevant statistics, and competing ideas.
+  agent: >-
+    lead_researcher
+
+fact_check:
+  description: >-
+    Identify claims in the post and find references on the internet
+    to fact check those claims.
+  expected_output: >-
+    A completed FactCheckReport of the Docuement, with analysis of the claims in the document,
+    analysis of if they are true or not, with evidence to support the analysis.
+  agent: >-
+    technical_analyst
+
+edit_copy:
+  description: >-
+    Help the user edit the document for clarity, grammar, and style.  Highlight facts
+    that are incorrect based on the FactCheckReport shared
+  expected_output: >-
+    A revised version of the blog post located at {file_path}, while
+    keeping any inline HTML. Annotate the document using markdown footnotes on what was changed
+    and why. Write it out to a file with a name {revised_file_path}
+  agent: >-
+    copy_editor

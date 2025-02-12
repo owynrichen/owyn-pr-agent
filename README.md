@@ -1,37 +1,26 @@
-# owyn_trial_agent
-This is the start of your AgentStack project.
+# Owyn PR Agent
 
-## How to build your Crew Agent
-### With the CLI
-Add an agent using AgentStack with the CLI:  
-`agentstack generate agent <agent_name>`  
-You can also shorten this to `agentstack g a <agent_name>`  
-For wizard support use `agentstack g a <agent_name> --wizard`  
-Finally for creation in the CLI alone, use `agentstack g a <agent_name> --role/-r <role> --goal/-g <goal> --backstory/-b <backstory> --model/-m <provider/model>`
+# Setup
 
-This will automatically create a new agent in the `agents.yaml` config as well as in your code. Either placeholder strings will be used, or data included in the wizard.
+I need to switch this from a ```poetry``` setup to a pure ```uv``` setup since CrewAI uses uv
+under the covers, but haven't yet.
 
-Similarly, tasks can be created with `agentstack g t <tool_name>`
+To get this installed, run this:
 
-Add tools with `agentstack tools add` and view tools available with `agentstack tools list`
+```bash
+poetry install
+poetry run crewai install
+```
 
-## How to use your Agent
-In this directory, run `uv pip install --requirements pyproject.toml`
+You'll need to setup a ```.env``` file, so you can/should run this:
 
-To run your project, use the following command:  
-`agentstack run`
+```bash
+copy .env.example .env
+# edit the file
+```
 
-This will initialize your crew of AI agents and begin task execution as defined in your configuration in the main.py file.
+# Running
 
-#### Replay Tasks from Latest Crew Kickoff:
-
-CrewAI now includes a replay feature that allows you to list the tasks from the last run and replay from a specific one. To use this feature, run:  
-`crewai replay <task_id>`  
-Replace <task_id> with the ID of the task you want to replay.
-
-#### Reset Crew Memory
-If you need to reset the memory of your crew before running it again, you can do so by calling the reset memory feature:  
-`crewai reset-memory`  
-This will clear the crew's memory, allowing for a fresh start.
-
-> 🪩 Project built with [AgentStack](https://github.com/AgentOps-AI/AgentStack)
+```bash
+poetry run crewai run
+```
