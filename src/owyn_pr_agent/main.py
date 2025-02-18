@@ -6,12 +6,13 @@ import base64
 from datetime import date
 from dotenv import load_dotenv
 import openlit
+from .api import CrewAPIServer
 
 load_dotenv()
 LANGFUSE_AUTH=base64.b64encode(f"{os.getenv('LANGFUSE_PUBLIC_KEY')}:{os.getenv('LANGFUSE_SECRET_KEY')}".encode()).decode()
 os.environ["OTEL_EXPORTER_OTLP_HEADERS"] = f"Authorization=Basic {LANGFUSE_AUTH}"
 
-openlit.init(disable_metrics=True)
+openlit.init()
 
 from .crew import OwynPrAgent
 instance = OwynPrAgent().crew()
@@ -23,6 +24,7 @@ def get_inputs():
     inputs["file_path"] = "../owynrichen.com/content/playing_with_ai_agents.md"
     inputs["revised_file_path"] = "../owynrichen.com/content/revised_playing_with_ai_agents.md"
     inputs["current_date"] = str(date.today())
+    inputs["branch_name"] = os.getenv("GITHUB_BASE_BRANCH", "main")
     return inputs
 
 def run():
@@ -32,6 +34,13 @@ def run():
     print("Running the crew...")
     instance.kickoff(inputs=get_inputs())
 
+def run_server():
+    """
+    Run the agent as a server.
+    """
+    print("Running the crew as a server...")
+    server = CrewAPIServer(crew=instance)
+    server.run()
 
 def train():
     """

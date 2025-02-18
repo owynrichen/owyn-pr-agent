@@ -1,22 +1,33 @@
+retrieve_branch:
+  description: >-
+    Retrieve the latest branch of the blog post from the repository based on the branch
+    used in the pull request.  The branch name is {branch_name}.
+  expected_output: >-
+    The branch of the blog post that was retrieved and the name of the files to edit
+    are added as the file_path input.
+  agent: >-
+    branch_retriever
+
 plan_edit:
   description: >-
     Read the document located at {file_path}, pull out all the urls referenced package it
-    into a Document and provide a basic strategy for how to review it.
-  expected_output: >-
-    An EditingStrategy with strategic notes for areas the team should focus their research
-    and review.
+    into a Document and provide a basic strategy as an EditingStrategy for how to review it.
+  expected_output: >- # EditingStrategy
+    A json structure containing the Document, strategic notes for areas the team should focus their research
+    and review, along with all urls found in the docment as references.
   agent: >-
     managing_editor
 
 research_topic:
   description: >-
-    Conduct a thorough research about the topic of the document located at {file_path}.
+    Conduct a thorough research about the topic of the document shared, including reviewing
+    any references.
 
     Make sure you find any interesting and relevant information given the
     current date is {current_date}.
-  expected_output: >-
-    A complete TopicResearchReport on the Document of the post and the landscape of the related field,
-    including sources that are authoritative, any relevant statistics, and competing ideas.
+  expected_output: >- # TopicResearchReport
+    A json structure with a report containing the Document of the post, the landscape of the related field,
+    sources on the topic that are authoritative, any relevant statistics, and competing ideas.
   agent: >-
     lead_researcher
 
@@ -32,10 +43,10 @@ fact_check:
 
 edit_copy:
   description: >-
-    Help the user edit the document for clarity, grammar, and style.  Highlight facts
-    that are incorrect based on the FactCheckReport shared
-  expected_output: >-
-    A revised version of the blog post located at {file_path}, while
+    Help the user edit the document referenced in the EditingStrategy for clarity,
+    grammar, and style.  Highlight facts that are incorrect based on the FactCheckReport shared
+  expected_output: >- #Document
+    A revised version of the Document, while
     keeping any inline HTML. Annotate the document using markdown footnotes on what was changed
     and why. Write it out to a file with a name {revised_file_path}
   agent: >-

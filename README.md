@@ -24,3 +24,11 @@ copy .env.example .env
 ```bash
 poetry run crewai run
 ```
+
+# Building the Container
+
+Assuming you're using podman (vs. docker) you build it like this:
+
+```bash
+podman build -t owyn-pr-agent:latest .
+```
